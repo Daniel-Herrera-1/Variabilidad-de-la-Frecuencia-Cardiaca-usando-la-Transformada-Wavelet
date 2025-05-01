@@ -25,7 +25,7 @@
 
 **Dominio tiempo-frecuencia:** aplicamos la Transformada Wavelet —un “microscopio” dinámico— para detectar cómo cambian las frecuencias  a lo largo de los 5 minutos de registro.
 
-#Diagrama de flujo
+# Diagrama de flujo
 
 ![image](https://github.com/user-attachments/assets/1d4b497f-e38b-464d-bbc8-1f8433ae6417)
 
