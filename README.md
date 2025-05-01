@@ -175,4 +175,76 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/158e4055-02d6-4874-93dd-37a82aa06cdf)
 
 
+## Deteccion de los picos R
+
+Antes de todo En un electrocardiograma (ECG), un pico R es el punto más alto de un complejo QRS, que representa la despolarización ventricular, es decir, el momento en que los ventrículos del corazón se contraen. Es el componente más prominente del ECG y por eso se suele usar para analizar la frecuencia cardíaca y la variabilidad del ritmo (HRV).
+
+```python
+distance = int(0.2 * sampling_rate)  # 0.2 es el tiempo  entre picos(Tiempo) , entre mayor tiempo menos reconocimiento de picos
+min_height = 80   # mV Deteccion de picos desde un minimo de 80mV
+max_height = 130  # mV Deteccion de picos hasta un maximo de 130 (Asegurar que capte todos los picos)
+```
+
+- **distance:** Define el mínimo número de muestras entre dos picos R detectables,  Esto impone un límite mínimo de 0.2 segundos entre picos, lo que evita detectar múltiples picos dentro de un solo latido.
+- **min_height y max_height:** Se establece que un pico debe estar entre 80 mV y 130 mV de altura para ser considerado un pico R, siendo min_height la altura minima y el max la altura maxima
+
+```python
+peaks, properties = find_peaks(filtered_ecg, distance=distance, height=(min_height, max_height))
+```
+- find_peaks() es una función de scipy.signal que detecta máximos locales en la señal.
+
+- **Solo se consideran los picos que cumplan:** - Tener una distancia mínima (distance), - Tener una altura dentro del rango definido (height)
+
+```python
+t_peaks = peaks / sampling_rate
+```
+
+- Convierte las posiciones de muestra a tiempo en segundos, útil para graficar o calcular intervalos entre latidos.
+
+### Visualizacion de los picos R y cuantos picos R hay
+
+```python
+# Visualización
+plt.figure(figsize=(15, 5))
+plt.plot(time, filtered_ecg, label='ECG Filtrado', color='green')
+plt.plot(time[peaks], filtered_ecg[peaks], 'rx', label=f'Picos R detectados ({min_height}-{max_height} mV)')
+plt.title('Detección de Picos R con Rango de Amplitud')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Amplitud (mV)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+print(f"Cantidad de picos R detectados: {len(peaks)}")
+
+# Cantidad de picos R detectados: 469
+```
+![image](https://github.com/user-attachments/assets/2dbea8bc-1cb6-49c5-8c60-1fbaee18cdac)
+![image](https://github.com/user-attachments/assets/3eef1763-4693-4d74-b2e4-78908cd48cb9)
+
+**Cantidad de picos R detectados: 469**
+
+*Obtener los picos R puede ayudar con lo siguiente*
+
+- Calcular la frecuencia cardíaca.
+
+- Estimar los intervalos R-R (tiempo entre latidos).
+
+- Realizar análisis de variabilidad (HRV), estrés, fatiga, etc.
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
