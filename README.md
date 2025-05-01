@@ -236,7 +236,9 @@ print(f"Cantidad de picos R detectados: {len(peaks)}")
 
 
 
+![image](https://github.com/user-attachments/assets/271346e6-6ac6-4a10-9a0a-f345e3d83d60)
 
+![image](https://github.com/user-attachments/assets/f4ff73ce-c025-49d7-8a8b-c188aabcdb18)
 
  
 
