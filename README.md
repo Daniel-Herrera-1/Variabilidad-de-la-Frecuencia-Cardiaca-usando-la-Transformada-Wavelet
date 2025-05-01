@@ -95,13 +95,13 @@ plt.show()
 
 - Frecuencia de corte superior (highcut): 40 Hz
 
-- Orden del filtro: n ( Puede variar el orden del filtro, ya que aunque esta definido , se puede cambiar por orden 1,2,3 etc, en este caso es 1)
+- Orden del filtro: n ( Puede variar el orden del filtro, ya que aunque esta definido , se puede cambiar por orden 1,2,3 etc, en este caso es 2)
   
 ```python
 sampling_rate = 400  # Hz
 lowcut = 0.5         # Hz
 highcut = 40.0       # Hz
-order = 1
+order = 2
 ```
 - La frecuencia de muestreo (fs).
 
@@ -171,7 +171,8 @@ plt.ylabel('Amplitud (mV)')
 plt.grid(True)
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/b5a239b9-3324-4c4b-a5db-c63b35572856)
-![image](https://github.com/user-attachments/assets/a3bfd6a4-66b0-4afd-91a4-86274d8bccd1)
+![image](https://github.com/user-attachments/assets/cd2eccd2-5967-42e9-8a07-6d70b83be904)
+![image](https://github.com/user-attachments/assets/158e4055-02d6-4874-93dd-37a82aa06cdf)
+
 
 
