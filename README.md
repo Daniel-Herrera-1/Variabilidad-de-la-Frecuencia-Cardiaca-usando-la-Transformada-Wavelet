@@ -1,17 +1,19 @@
 # Variabilidad-de-la-Frecuencia-Cardiaca-usando-la-Transformada-Wavelet
 
+# Objetivo
 
+Estudiar la variabilidad del ritmo cardíaco (HRV) aplicando la transformada wavelet, con el objetivo de detectar alteraciones en sus patrones frecuenciales y examinar cómo evoluciona la señal cardiaca en el tiempo.
+
+# Requisitos
+* Computador con Pyhton
+* Librerias: Pywavelets
+
+  
 ## Fundamentos Teoricos
 
 ### Nuestro corazón no late siempre a la misma velocidad; entre un latido y el siguiente se producen pequeñas aceleraciones y desaceleraciones. Estas variaciones, conocidas como Variabilidad de la Frecuencia Cardíaca (HRV), nos indican cómo el cuerpo gestiona el estrés, el descanso y las respuestas al entorno.
 
-## Objetivo
 
-Estudiar la variabilidad del ritmo cardíaco (HRV) aplicando la transformada wavelet, con el objetivo de detectar alteraciones en sus patrones frecuenciales y examinar cómo evoluciona la señal cardiaca en el tiempo.
-
-## Requisitos
-* Computador con Pyhton
-* Librerias: Pywavelets
 
 ## Control autonomo
 
@@ -266,21 +268,56 @@ print(f"Cantidad de picos R detectados: {len(peaks)}")
 ### Gráfica 4: Intervalos R-R
 
 ```python
+rr_intervalos = np.diff(peaks) / frecuenciamuestreo  # en segundos
+
 plt.plot(rr_intervalos, marker='o')
 ```
+- peaks contiene los índices (en muestras) de los picos detectados en la señal.
 
-Representa la duración de cada intervalo R-R. Ideal para detectar irregularidades en el ritmo cardíaco.
+- np.diff(peaks) calcula la diferencia entre cada pico consecutivo → da la cantidad de muestras entre latidos.
+
+- Dividir por frecuenciamuestreo (en Hz) convierte esas diferencias de muestras a segundos.
+
+```python
+mean_rr = np.mean(rr_intervalos)
+std_rr = np.std(rr_intervalos)
+print(f"Media de Intervalos R-R: {mean_rr:.4f} s")
+print(f"Desviación estándar de R-R: {std_rr:.4f} s")
+
+#Media de Intervalos R-R: 0.6405 s
+#Desviación estándar de R-R: 0.0686 s
+
+```
+Se calcula la media (mean_rr) y la desviación estándar (std_rr) de los intervalos R-R.
+
+- La media indica el promedio de tiempo entre latidos → permite estimar la frecuencia cardíaca media.
+
+- La desviación estándar muestra cuánto varían esos intervalos → es una medida simple de HRV.
+
+- Muestra los valores numéricos de la media y la variabilidad de los intervalos R-R en consola.
+
 
 ![image](https://github.com/user-attachments/assets/271346e6-6ac6-4a10-9a0a-f345e3d83d60)
 
+Representa la duración de cada intervalo R-R. Ideal para detectar irregularidades en el ritmo cardíaco.
 
 ## 7. Análisis de HRV con Wavelet
 En primer lugar la transformada wavelet analiza señales en tiempo y frecuencia a la vez, detecta cambios temporales en frecuencias, y es ideal para estudiar patrones VARIABLES como los latidos cardíacos.
 ```python
+wavelet_type = 'morl'
+scales = np.arange(1, 1000)  # Más escalas , mayor resolución en la frecuencia es decir aumentar los valores (b)
+sampling_period = 1  
+
 coeffs, freqs = pywt.cwt(rr_intervalos, scales=np.arange(1, 1000), wavelet='morl', sampling_period=1)
 ```
+- Define las escalas (inversas de frecuencia) que usará la transformada.
 
-Se aplica la transformada wavelet continua (CWT):
+- Cuanto más amplio sea este rango, mayor será la resolución en frecuencia del espectrograma.
+
+- Este rango cubre tanto frecuencias altas como bajas.
+
+
+## Se aplica la transformada wavelet continua (CWT):
 - Se usan muchas escalas (`np.arange(1, 1000)`) para obtener buena resolución en frecuencia.
 - La wavelet Morlet (`'morl'`) es una buena elección para análisis fisiológico.
 
