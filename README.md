@@ -85,6 +85,93 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/7a1cd509-b354-4069-a14a-12db32e42009)
 ![image](https://github.com/user-attachments/assets/3c9db63d-d91d-4b42-bd0e-408eaf12558f)
 
+*Posteriormente, se aplicó un filtro digital pasabanda Butterworth de orden 4, diseñado con las siguientes características:*
 
+- Tipo de filtro: IIR Butterworth (respuesta suave, sin ondulaciones en banda pasante)
+
+- Frecuencia de muestreo (fs): 400 Hz
+
+- Frecuencia de corte inferior (lowcut): 0.5 Hz
+
+- Frecuencia de corte superior (highcut): 40 Hz
+
+- Orden del filtro: n ( Puede variar el orden del filtro, ya que aunque esta definido , se puede cambiar por orden 1,2,3 etc, en este caso es 1)
+  
+```python
+sampling_rate = 400  # Hz
+lowcut = 0.5         # Hz
+highcut = 40.0       # Hz
+order = 1
+```
+- La frecuencia de muestreo (fs).
+
+- El rango de paso del filtro: 0.5–40 Hz.
+
+- El orden del filtro Butterworth (mayor orden = mayor pendiente del corte).
+
+```python
+def butter_bandpass(lowcut, highcut, fs, order=4):
+    nyq = 0.5 * fs
+    low = lowcut / nyq
+    high = highcut / nyq
+    b, a = butter(order, [low, high], btype='band')
+    return b, a
+```
+- Calcula la frecuencia de Nyquist (mitad del fs).
+
+- Convierte las frecuencias de corte de Hz a la escala normalizada (0 a 1) que exige la función butter() de SciPy.
+
+- Llama a butter() para diseñar el filtro pasabanda Butterworth, y devuelve los coeficientes del filtro:
+
+- b: numerador
+
+- a: denominador
+
+```python
+def aplicar_filtro_butterworth(señal, fs, lowcut=0.5, highcut=40.0, order=4):
+    b, a = butter_bandpass(lowcut, highcut, fs, order)
+```
+- Esta parte llama a la función anterior para obtener los coeficientes del filtro.
+- 
+```python
+    if order == 1:
+        eq = f"y[n] = ({b[0]:.4f} * x[n] + {b[1]:.4f} * x[n-1] - {a[1]:.4f} * y[n-1])"
+        print("Ecuación en diferencias del filtro Butterworth:")
+        print(eq)
+```
+- Si el filtro es de orden 1, imprime la ecuación en diferencias 
+
+```python
+    else:
+        print(f"Filtro Butterworth aplicado (orden {order})")
+        print(f"Coeficientes b: {b}")
+        print(f"Coeficientes a: {a}")
+```
+- Si el filtro es de orden mayor, imprime los coeficientes completos
+  
+```python
+    return lfilter(b, a, señal)
+```
+- Aplica el filtro a la señal usando lfilter(), que ejecuta la ecuación en diferencias usando los coeficientes b y a.
+ 
+```python
+filtered_ecg = aplicar_filtro_butterworth(ecg_mv, sampling_rate, lowcut, highcut, order)
+```
+- filtra la señal que ya fue convertida a milivoltios (ecg_mv) usando todos los parámetros definidos antes.
+
+### Grafica de la señal filtrada
+
+```python
+
+plt.figure(figsize=(15, 5))
+plt.plot(time, filtered_ecg, color='teal')
+plt.title('ECG Filtrado')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Amplitud (mV)')
+plt.grid(True)
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/b5a239b9-3324-4c4b-a5db-c63b35572856)
+![image](https://github.com/user-attachments/assets/a3bfd6a4-66b0-4afd-91a4-86274d8bccd1)
 
 
