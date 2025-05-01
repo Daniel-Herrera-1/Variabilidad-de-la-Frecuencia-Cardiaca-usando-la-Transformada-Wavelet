@@ -5,6 +5,14 @@
 
 ### Nuestro corazón no late siempre a la misma velocidad; entre un latido y el siguiente se producen pequeñas aceleraciones y desaceleraciones. Estas variaciones, conocidas como Variabilidad de la Frecuencia Cardíaca (HRV), nos indican cómo el cuerpo gestiona el estrés, el descanso y las respuestas al entorno.
 
+## Objetivo
+
+Estudiar la variabilidad del ritmo cardíaco (HRV) aplicando la transformada wavelet, con el objetivo de detectar alteraciones en sus patrones frecuenciales y examinar cómo evoluciona la señal cardiaca en el tiempo.
+
+## Requisitos
+* Computador con Pyhton
+* Librerias: Pywavelets
+
 ## Control autonomo
 
 **Sistema simpático (acelerador):** eleva las pulsaciones cuando hacemos ejercicio, nos asustamos o nos estresamos.
@@ -267,7 +275,7 @@ Representa la duración de cada intervalo R-R. Ideal para detectar irregularidad
 
 
 ## 7. Análisis de HRV con Wavelet
-
+En primer lugar la transformada wavelet analiza señales en tiempo y frecuencia a la vez, detecta cambios temporales en frecuencias, y es ideal para estudiar patrones VARIABLES como los latidos cardíacos.
 ```python
 coeffs, freqs = pywt.cwt(rr_intervalos, scales=np.arange(1, 1000), wavelet='morl', sampling_period=1)
 ```
