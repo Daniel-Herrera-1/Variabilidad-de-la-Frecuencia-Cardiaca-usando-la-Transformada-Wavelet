@@ -5,7 +5,7 @@
 
 ### Nuestro corazón no late siempre a la misma velocidad; entre un latido y el siguiente se producen pequeñas aceleraciones y desaceleraciones. Estas variaciones, conocidas como Variabilidad de la Frecuencia Cardíaca (HRV), nos indican cómo el cuerpo gestiona el estrés, el descanso y las respuestas al entorno.
 
-## Control autonómico
+## Control autonomo
 
 **Sistema simpático (acelerador):** eleva las pulsaciones cuando hacemos ejercicio, nos asustamos o nos estresamos.
 
@@ -24,6 +24,10 @@
 **Dominio del tiempo:** calculamos la media y la desviación estándar de los intervalos R-R para evaluar su consistencia.
 
 **Dominio tiempo-frecuencia:** aplicamos la Transformada Wavelet —un “microscopio” dinámico— para detectar cómo cambian las frecuencias  a lo largo de los 5 minutos de registro.
+
+#Diagrama de flujo
+
+![image](https://github.com/user-attachments/assets/1d4b497f-e38b-464d-bbc8-1f8433ae6417)
 
 
 # Adquisicion de la señal 
